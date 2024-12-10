@@ -371,3 +371,136 @@ SELECT*FRom gom;
 SELECT*FROM monhoc;
 SELECT*FROM phutrach;
 
+--@block
+SHOW DATABASES;
+
+--@block
+USE academic_management;
+
+--@block
+SHOW TABLES;
+
+--@block
+SELECT sv.MaSinhVien, sv.HoVaTen, sv.Email, k.TenKhoa
+FROM SinhVien sv
+JOIN Khoa k ON sv.MaKhoa = k.MaKhoa
+WHERE k.TenKhoa = 'Khoa Công nghệ Vật liệu';
+
+--@block 
+SELECT k.TenKhoa, COUNT(sv.MaSinhVien) AS TongSoSinhVien
+FROM SinhVien sv
+JOIN Khoa k ON sv.MaKhoa = k.MaKhoa
+GROUP BY k.TenKhoa;
+
+--@block 
+SELECT COUNT(*) AS TongSoSinhVien
+FROM SinhVien;
+--@block
+SELECT 
+    sv.MaSinhVien, 
+    sv.HoVaTen, 
+    SUM(dk.Diem * mh.SoTinChi) / SUM(mh.SoTinChi) AS GPA
+FROM 
+    SinhVien sv
+JOIN 
+    DangKy dk ON sv.MaSinhVien = dk.MaSinhVien
+JOIN 
+    MonHoc mh ON dk.MaMonHoc = mh.MaMonHoc
+WHERE 
+    dk.TrangThai = 'Thành Công'  -- Chỉ tính điểm cho môn đã hoàn thành
+GROUP BY 
+    sv.MaSinhVien, sv.HoVaTen;
+
+--@block
+-- Thêm dữ liệu đăng ký môn học với điểm ngẫu nhiên
+INSERT INTO DangKy (MaSinhVien, MaMonHoc, MaHocKi, TrangThai, Diem)
+SELECT 
+    sv.MaSinhVien, 
+    mh.MaMonHoc, 
+    CONCAT('HK', FLOOR(200 + RAND() * 50)),  -- Random học kỳ
+    'Thành Công', 
+    ROUND(RAND() * 9 + 1, 1)  -- Random điểm từ 1 đến 10
+FROM 
+    SinhVien sv
+JOIN 
+    MonHoc mh
+WHERE 
+    NOT EXISTS (
+        SELECT 1 
+        FROM DangKy dk 
+        WHERE dk.MaSinhVien = sv.MaSinhVien 
+        AND dk.MaMonHoc = mh.MaMonHoc
+    )
+AND 
+    (SELECT COUNT(*) 
+     FROM DangKy 
+     WHERE DangKy.MaSinhVien = sv.MaSinhVien) < 10; -- Đảm bảo sinh viên có tối đa 10 môn học
+--@block
+SELECt* FROM dangky;
+
+--@block
+CREATE PROCEDURE TaoSinhVien()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE Ho VARCHAR(50);
+    DECLARE TenDem VARCHAR(50);
+    DECLARE Ten VARCHAR(50);
+    DECLARE Email VARCHAR(100);
+
+    WHILE i <= 100 DO
+        -- Tạo họ, tên đệm và tên ngẫu nhiên
+        SET Ho = ELT(FLOOR(1 + RAND() * 10), 
+                     'Nguyen', 'Tran', 'Le', 'Pham', 'Hoang', 'Vu', 'Do', 'Dang', 'Bui', 'Vo');
+        SET TenDem = ELT(FLOOR(1 + RAND() * 5), 
+                         'Van', 'Thi', 'Minh', 'Quoc', 'Thanh');
+        SET Ten = ELT(FLOOR(1 + RAND() * 10), 
+                      'Anh', 'Binh', 'Chau', 'Duc', 'Hoa', 'Khanh', 'Lam', 'Phuc', 'Son', 'Trang');
+
+        -- Tạo email từ họ và tên
+        SET Email = LOWER(CONCAT(Ho, TenDem, Ten, '@hcmut.edu.vn'));
+
+        -- Chèn dữ liệu vào bảng SinhVien
+        INSERT INTO SinhVien (
+            MaSinhVien, 
+            HoVaTen, 
+            NgaySinh, 
+            SoDienThoai, 
+            Khoa, 
+            GioiTinh, 
+            Email, 
+            MaKhoa, 
+            MaChuongTrinh
+        )
+        VALUES (
+            CONCAT('22', FLOOR(10000 + RAND() * 90000)), -- Random MaSinhVien dạng 22*****
+            CONCAT(Ho, ' ', TenDem, ' ', Ten),            -- Tên đầy đủ
+            DATE_ADD('1995-01-01', INTERVAL FLOOR(RAND() * 3650) DAY), -- Random ngày sinh (1995-2004)
+            CONCAT('09', FLOOR(100000000 + RAND() * 900000000)),       -- Random số điện thoại
+            2020 + FLOOR(RAND() * 5),                    -- Random khóa (2020-2025)
+            IF(RAND() > 0.5, 'Nam', 'Nữ'),              -- Random giới tính
+            Email,                                       -- Email từ họ và tên
+            FLOOR(1 + RAND() * 11),                     -- Random MaKhoa (1-11)
+            CASE FLOOR(1 + RAND() * 3)                  -- Random MaChuongTrinh (CC, CN, L)
+                WHEN 1 THEN 'CC'
+                WHEN 2 THEN 'CN'
+                ELSE 'L'
+            END
+        );
+
+        -- Tăng bộ đếm
+        SET i = i + 1;
+    END WHILE;
+END;
+
+
+
+--@block
+CALL TaoSinhVien();
+
+
+--@block
+SELECT* FROM sinhvien;  
+
+--@block
+DROP DATABASE academic_management;
+
