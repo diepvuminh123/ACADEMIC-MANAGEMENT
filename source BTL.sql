@@ -1,4 +1,4 @@
--- Tạo cơ sở dữ liệu academic_management
+/*-----------------------------------------Tạo các bảng cơ sở dữ liệu academic_management-----------------*/
 CREATE DATABASE academic_management;
 --@block
 
@@ -95,8 +95,9 @@ CREATE TABLE PhuTrach (
     FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaGiangVien),
     FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc)
 );
---@block
 
+--@block
+/*-----------------------------------------------------------Thêm dummy ----------------------------------*/
 -- Thêm dữ liệu mẫu vào bảng Khoa
 INSERT INTO Khoa (MaKhoa, TenKhoa) VALUES
 (1, 'Khoa Cơ khí'),
@@ -152,7 +153,7 @@ INSERT INTO GiangVien (MaGiangVien, HoTen, ChucDanh, TrinhDo, SoDienThoai, MaKho
 -- Thêm dữ liệu mẫu vào bảng Chương trình học
 INSERT INTO ChuongTrinhHoc (MaChuongTrinh, TongSoTinChi, ChuanNgoaiNguTotNghiep, ChuanCongTacXaHoi) VALUES
 ('CC', 128, 'IELTS> 6.5', '15 NGÀY CỘNG TÁC XÃ HỘI'),
-('CN', 128, 'IELTS >6.0 Và JLPT N3', '15 NGÀY CỘNG TÁC XÃ HỘI'),
+('CN', 128, 'IELTS >6.0 Và JLPT>N3', '15 NGÀY CỘNG TÁC XÃ HỘI'),
 ('L', 128, 'Toeic > 600 Hoặc Ielts> 6.0', '15 NGÀY CỘNG TÁC XÃ HỘI');
 --@block
 
@@ -261,83 +262,7 @@ INSERT INTO Gom (MaChuongTrinh, MaMonHoc) VALUES
 ('CC', 'CO2048'),
 ('CC', 'CO2049'),
 ('CN', 'CO2050');
-
 --@block
-
--- Thêm dữ liệu mẫu vào bảng Sinh viên
-INSERT INTO SinhVien (MaSinhVien, HoVaTen, NgaySinh, SoDienThoai, Khoa, GioiTinh, Email, MaKhoa, MaChuongTrinh) VALUES
-(2252472, 'Nguyễn Văn An', '2000-05-10', '0901234567', 2022, 'Nam', 'an.nguyen@hcmut.edu.vn', 1, 'CC'),
-(2252789, 'Lê Thị Bích', '1999-03-15', '0907654321', 2022, 'Nữ', 'bich.le@hcmut.edu.vn', 2, 'CN'),
-(2253123, 'Trần Minh Cường', '2001-12-20', '0912345678', 2021, 'Nam', 'cuong.tran@hcmut.edu.vn', 3, 'L'),
-(2253781, 'Phạm Thị Dung', '2002-03-10', '0987654321', 2023, 'Nữ', 'dung.pham@hcmut.edu.vn', 4, 'CC'),
-(2254321, 'Hoàng Văn Đức', '2001-07-15', '0932123456', 2020, 'Nam', 'duc.hoang@hcmut.edu.vn', 5, 'CN'),
-(2254987, 'Nguyễn Thị Hà', '2000-06-22', '0971234567', 2024, 'Nữ', 'ha.nguyen@hcmut.edu.vn', 6, 'L'),
-(2255432, 'Vũ Văn Hải', '2002-09-08', '0943128765', 2021, 'Nam', 'hai.vu@hcmut.edu.vn', 7, 'CC'),
-(2256123, 'Lê Minh Hoàng', '2000-02-25', '0923456781', 2020, 'Nam', 'hoang.le@hcmut.edu.vn', 8, 'CN'),
-(2256789, 'Trần Thị Hồng', '2003-11-30', '0919876543', 2022, 'Nữ', 'hong.tran@hcmut.edu.vn', 9, 'L'),
-(2257321, 'Nguyễn Văn Hưng', '2001-01-17', '0934567890', 2023, 'Nam', 'hung.nguyen@hcmut.edu.vn', 10, 'CC'),
-(2257987, 'Phạm Thị Lan', '2004-05-14', '0965432109', 2024, 'Nữ', 'lan.pham@hcmut.edu.vn', 11, 'CN'),
-(2258123, 'Hoàng Minh Long', '2002-07-12', '0954321098', 2020, 'Nam', 'long.hoang@hcmut.edu.vn', 11, 'L'),
-(2258791, 'Nguyễn Thị Mai', '2000-08-19', '0912348765', 2021, 'Nữ', 'mai.nguyen@hcmut.edu.vn', 10, 'CC'),
-(2259432, 'Trần Văn Minh', '2003-10-24', '0945671234', 2023, 'Nam', 'minh.tran@hcmut.edu.vn', 1, 'CN'),
-(2260123, 'Lê Thị Nga', '2001-03-05', '0978765432', 2020, 'Nữ', 'nga.le@hcmut.edu.vn', 2, 'L'),
-(2260789, 'Phạm Văn Nam', '2002-01-22', '0921345678', 2024, 'Nam', 'nam.pham@hcmut.edu.vn', 3, 'CC'),
-(2261432, 'Hoàng Thị Ngọc', '2003-06-18', '0987654312', 2021, 'Nữ', 'ngoc.hoang@hcmut.edu.vn', 4, 'CN'),
-(2261987, 'Nguyễn Văn Phát', '2002-04-28', '0917654321', 2022, 'Nam', 'phat.nguyen@hcmut.edu.vn', 5, 'L'),
-(2262123, 'Lê Minh Phúc', '2001-12-14', '0934567123', 2023, 'Nam', 'phuc.le@hcmut.edu.vn', 6, 'CC'),
-(2262789, 'Trần Thị Quỳnh', '2000-07-04', '0956781234', 2024, 'Nữ', 'quynh.tran@hcmut.edu.vn', 7, 'CN'),
-(2263123, 'Nguyễn Văn Quang', '2002-09-09', '0943129876', 2021, 'Nam', 'quang.nguyen@hcmut.edu.vn', 8, 'L'),
-(2263781, 'Phạm Thị Thu', '2004-01-30', '0923451234', 2020, 'Nữ', 'thu.pham@hcmut.edu.vn', 9, 'CC'),
-(2264321, 'Lê Văn Thịnh', '2001-02-12', '0965432108', 2023, 'Nam', 'thinh.le@hcmut.edu.vn', 10, 'CN'),
-(2264987, 'Nguyễn Thị Trang', '2000-11-15', '0912347654', 2022, 'Nữ', 'trang.nguyen@hcmut.edu.vn', 11, 'L'),
-(2265432, 'Trần Minh Tú', '2003-05-07', '0954321987', 2024, 'Nam', 'tu.tran@hcmut.edu.vn', 11, 'CC'),
-(2266123, 'Phạm Thị Vân', '2001-03-10', '0943218765', 2021, 'Nữ', 'van.pham@hcmut.edu.vn', 10, 'CN'),
-(2266789, 'Nguyễn Văn Vũ', '2004-07-22', '0918765432', 2020, 'Nam', 'vu.nguyen@hcmut.edu.vn', 1, 'L'),
-(2267321, 'Lê Minh Yến', '2002-08-30', '0921347654', 2023, 'Nữ', 'yen.le@hcmut.edu.vn', 2, 'CC'),
-(2267987, 'Hoàng Thị Anh', '2000-02-18', '0953216789', 2024, 'Nữ', 'anh.hoang@hcmut.edu.vn', 3, 'CN'),
-(2268123, 'Nguyễn Minh Bình', '2003-06-25', '0987654329', 2021, 'Nam', 'binh.nguyen@hcmut.edu.vn', 4, 'L'),
-(2268791, 'Trần Thị Cẩm', '2002-04-12', '0934567128', 2020, 'Nữ', 'cam.tran@hcmut.edu.vn', 5, 'CC'),
-(2269432, 'Lê Thị Duyên', '2000-07-01', '0965432123', 2023, 'Nữ', 'duyen.le@hcmut.edu.vn', 6, 'CN'),
-(2270123, 'Nguyễn Văn Đăng', '2001-08-30', '0917654329', 2024, 'Nam', 'dang.nguyen@hcmut.edu.vn', 7, 'L'),
-(2270789, 'Hoàng Minh Đạt', '2004-05-14', '0923456780', 2022, 'Nam', 'dat.hoang@hcmut.edu.vn', 8, 'CC'),
-(2271432, 'Phạm Văn Đức', '2003-11-19', '0975432107', 2020, 'Nam', 'duc.pham@hcmut.edu.vn', 9, 'CN'),
-(2271987, 'Nguyễn Thị Giang', '2001-10-17', '0945678912', 2021, 'Nữ', 'giang.nguyen@hcmut.edu.vn', 10, 'L'),
-(2272123, 'Lê Minh Hào', '2002-06-02', '0956789123', 2023, 'Nam', 'hao.le@hcmut.edu.vn', 11, 'CC'),
-(2272789, 'Trần Thị Hoài', '2004-09-28', '0934567893', 2024, 'Nữ', 'hoai.tran@hcmut.edu.vn', 11, 'CN'),
-(2273123, 'Nguyễn Văn Huy', '2001-03-01', '0912345698', 2022, 'Nam', 'huy.nguyen@hcmut.edu.vn', 10, 'L'),
-(2273781, 'Phạm Thị Hương', '2000-12-15', '0945671239', 2020, 'Nữ', 'huong.pham@hcmut.edu.vn', 1, 'CC'),
-(2274321, 'Lê Văn Khang', '2003-10-25', '0954321098', 2021, 'Nam', 'khang.le@hcmut.edu.vn', 2, 'CN'),
-(2274987, 'Nguyễn Thị Khánh', '2002-02-11', '0932123457', 2023, 'Nữ', 'khanh.nguyen@hcmut.edu.vn', 3, 'L');
-
-
---@block
-
--- Thêm dữ liệu mẫu vào bảng Đăng ký
-INSERT INTO DangKy (MaSinhVien, MaMonHoc, MaHocKi, TrangThai, Diem) VALUES
-(2252472, 'CO2001', 'HK201', 'Thành Công', 7.5), -- Nguyễn Văn An
-(2252789, 'CO2002', 'HK211', 'Thành Công', 6.5), -- Lê Thị Bích
-(2253123, 'CO2003', 'HK222', 'Đã Hủy Môn', NULL),    -- Trần Minh Cường
-(2253781, 'CO2004', 'HK231', 'Thành Công', 8.0), -- Phạm Thị Dung
-(2254321, 'CO2005', 'HK201', 'Đã Hủy Môn', NULL), -- Hoàng Văn Đức
-(2254987, 'CO2006', 'HK222', 'Thành Công', 7.8), -- Nguyễn Thị Hà
-(2255432, 'CO2007', 'HK211', 'Đã Hủy Môn', NULL),    -- Vũ Văn Hải
-(2256123, 'CO2008', 'HK223', 'Thành Công', 8.9), -- Lê Minh Hoàng
-(2256789, 'CO2009', 'HK231', 'Thành Công', 9.2), -- Trần Thị Hồng
-(2257321, 'CO2010', 'HK241', 'Đã Hủy Môn', NULL),    -- Nguyễn Văn Hưng
-(2257987, 'CO2011', 'HK231', 'Thành Công', 7.5), -- Phạm Thị Lan
-(2258123, 'CO2012', 'HK223', 'Thành Công', 8.0), -- Hoàng Minh Long
-(2258791, 'CO2013', 'HK241', 'Thành Công', 8.3), -- Nguyễn Thị Mai
-(2259432, 'CO2014', 'HK211', 'Đã Hủy Môn', NULL),    -- Trần Văn Minh
-(2260123, 'CO2015', 'HK222', 'Thành Công', 9.0), -- Lê Thị Nga
-(2260789, 'CO2016', 'HK231', 'Thành Công', 8.8), -- Phạm Văn Nam
-(2261432, 'CO2017', 'HK211', 'Đã Hủy Môn', NULL),    -- Hoàng Thị Ngọc
-(2261987, 'CO2018', 'HK223', 'Thành Công', 9.1), -- Nguyễn Văn Phát
-(2262123, 'CO2019', 'HK222', 'Thành Công', 7.9), -- Lê Minh Phúc
-(2262789, 'CO2020', 'HK241', 'Đã Hủy Môn', NULL);    -- Trần Thị Quỳnh
-
-
---@block
-
 -- Thêm dữ liệu mẫu vào bảng Phụ trách
 INSERT INTO PhuTrach (MaGiangVien, MaMonHoc, ThoiGianDay, DiaDiemDay, HocKi) VALUES
 (3353123, 'CO2001', '08:00:00', 'Phòng A1', 'HK201'),
@@ -360,66 +285,21 @@ INSERT INTO PhuTrach (MaGiangVien, MaMonHoc, ThoiGianDay, DiaDiemDay, HocKi) VAL
 (3368314, 'CO2018', '14:00:00', 'Phòng B2', 'HK201'),
 (3369132, 'CO2019', '15:00:00', 'Phòng C1', 'HK211'),
 (3370214, 'CO2020', '08:00:00', 'Phòng D3', 'HK222');
--- Test
 --@block
-SELECT * FROM GiangVien;
-SELECT *FRom chuongtrinhhoc;
-SELECT* FROM dangky;
-SELECT*FROM khoa;
-SELECT*FROM sinhvien;
-SELECT*FRom gom;
-SELECT*FROM monhoc;
-SELECT*FROM phutrach;
-
---@block
-SHOW DATABASES;
-
---@block
-USE academic_management;
-
---@block
-SHOW TABLES;
-
---@block
-SELECT sv.MaSinhVien, sv.HoVaTen, sv.Email, k.TenKhoa
-FROM SinhVien sv
-JOIN Khoa k ON sv.MaKhoa = k.MaKhoa
-WHERE k.TenKhoa = 'Khoa Công nghệ Vật liệu';
-
---@block 
-SELECT k.TenKhoa, COUNT(sv.MaSinhVien) AS TongSoSinhVien
-FROM SinhVien sv
-JOIN Khoa k ON sv.MaKhoa = k.MaKhoa
-GROUP BY k.TenKhoa;
-
---@block 
-SELECT COUNT(*) AS TongSoSinhVien
-FROM SinhVien;
---@block
-SELECT 
-    sv.MaSinhVien, 
-    sv.HoVaTen, 
-    SUM(dk.Diem * mh.SoTinChi) / SUM(mh.SoTinChi) AS GPA
-FROM 
-    SinhVien sv
-JOIN 
-    DangKy dk ON sv.MaSinhVien = dk.MaSinhVien
-JOIN 
-    MonHoc mh ON dk.MaMonHoc = mh.MaMonHoc
-WHERE 
-    dk.TrangThai = 'Thành Công'  -- Chỉ tính điểm cho môn đã hoàn thành
-GROUP BY 
-    sv.MaSinhVien, sv.HoVaTen;
-
---@block
--- Thêm dữ liệu đăng ký môn học với điểm ngẫu nhiên
+--Thêm dữ liệu đăng ký môn học với điểm ngẫu nhiên
 INSERT INTO DangKy (MaSinhVien, MaMonHoc, MaHocKi, TrangThai, Diem)
 SELECT 
     sv.MaSinhVien, 
     mh.MaMonHoc, 
     CONCAT('HK', FLOOR(200 + RAND() * 50)),  -- Random học kỳ
-    'Thành Công', 
-    ROUND(RAND() * 9 + 1, 1)  -- Random điểm từ 1 đến 10
+    CASE 
+        WHEN RAND() < 0.8 THEN 'Thành Công'  -- 80% thành công
+        ELSE 'Thất Bại'                     -- 20% thất bại
+    END AS TrangThai,
+    CASE 
+        WHEN RAND() < 0.7 THEN ROUND(RAND() * 9 + 1, 1)  -- Điểm từ 1 đến 10 nếu thành công
+        ELSE NULL                                       -- Điểm NULL nếu thất bại
+    END AS Diem
 FROM 
     SinhVien sv
 JOIN 
@@ -436,9 +316,6 @@ AND
      FROM DangKy 
      WHERE DangKy.MaSinhVien = sv.MaSinhVien) < 10; -- Đảm bảo sinh viên có tối đa 10 môn học
 --@block
-SELECt* FROM dangky;
-
---@block
 CREATE PROCEDURE TaoSinhVien()
 BEGIN
     DECLARE i INT DEFAULT 1;
@@ -450,11 +327,11 @@ BEGIN
     WHILE i <= 100 DO
         -- Tạo họ, tên đệm và tên ngẫu nhiên
         SET Ho = ELT(FLOOR(1 + RAND() * 10), 
-                     'Nguyen', 'Tran', 'Le', 'Pham', 'Hoang', 'Vu', 'Do', 'Dang', 'Bui', 'Vo');
+                     'Nguyên', 'Trân', 'Lê', 'Phạm', 'Hoàng', 'Vũ', 'Đỗ', 'Đặng', 'Bùi', 'Võ');
         SET TenDem = ELT(FLOOR(1 + RAND() * 5), 
-                         'Van', 'Thi', 'Minh', 'Quoc', 'Thanh');
+                         'Vân', 'Thị', 'Minh', 'Quốc', 'Thanh');
         SET Ten = ELT(FLOOR(1 + RAND() * 10), 
-                      'Anh', 'Binh', 'Chau', 'Duc', 'Hoa', 'Khanh', 'Lam', 'Phuc', 'Son', 'Trang');
+                      'Anh', 'Bình', 'Châu', 'Đức', 'Hòa', 'Khánh', 'Lâm', 'Phúc', 'Sơn', 'Trang');
 
         -- Tạo email từ họ và tên
         SET Email = LOWER(CONCAT(Ho, TenDem, Ten, '@hcmut.edu.vn'));
@@ -491,16 +368,69 @@ BEGIN
         SET i = i + 1;
     END WHILE;
 END;
-
-
-
---@block
 CALL TaoSinhVien();
 
-
+/*-------------------------------------Các hàm test trường dữ liệu*/-------------------------------------*/
 --@block
-SELECT* FROM sinhvien;  
-
+SELECT * FROM GiangVien;
+SELECT *FRom chuongtrinhhoc;
+SELECT* FROM dangky;
+SELECT*FROM khoa;
+SELECT*FROM sinhvien;
+SELECT*FRom gom;
+SELECT*FROM monhoc;
+SELECT*FROM phutrach;
+/*-------------------------------------------Delete dữ liệu và reset --------------------------------------*/
 --@block
-DROP DATABASE academic_management;
+drop database academic_management;
+create database academic_management;
+/*-------------------------------------------CRU( TRUY VẤN DỮ LIỆU)----------------------------------------*/
+--Create
+--@block
+INSERT INTO SinhVien (MaSinhVien, HoVaTen, NgaySinh, SoDienThoai, Khoa, GioiTinh, Email, MaKhoa, MaChuongTrinh)
+VALUES (2219999, 'Nguyễn Văn An', '2001-12-12', '0912345678', 2023, 'Nam', 'an.nguyen@hcmut.edu.vn', 5, 'CC');
+/*--------------------------Retrieve--------*/
+/*-----------Tổng số sinh viên từng khoa---*/
+--@block
+SELECT K.MaKhoa, K.TenKhoa, COUNT(S.MaSinhVien) AS TongSoSinhVien
+FROM Khoa K
+LEFT JOIN SinhVien S ON K.MaKhoa = S.MaKhoa
+GROUP BY K.MaKhoa, K.TenKhoa;
+/*-----------Tổng số giảng viên từng khoa---*/
+--@block
+SELECT K.MaKhoa, K.TenKhoa, COUNT(G.MaGiangVien) AS TongSoGiangVien
+FROM Khoa K
+LEFT JOIN GiangVien G ON K.MaKhoa = G.MaKhoa
+GROUP BY K.MaKhoa, K.TenKhoa;
+/*-----------Tổng số sinh viên từng trường---*/
+--@block
+SELECT COUNT(*) AS TongSoSinhVien
+FROM SinhVien;
+/*-----------Tổng số sinh viên nữ---*/
+--@block
+SELECT COUNT(*) AS TongSoSinhVienNu
+FROM SinhVien
+WHERE GioiTinh = 'Nữ';
+/*-----------Tỷ lệ giảng viên có trình độ thạc sĩ---*/
+--@block
+SELECT 
+    COUNT(*) AS SoGiangVienThacSi,
+    (COUNT(*) * 100 / (SELECT COUNT(*) FROM GiangVien)) AS TyLeThacSi
+FROM GiangVien
+WHERE TrinhDo = 'Thạc sĩ';
+/*--------------------------Update--------*/
+/*-----------Sửa mã số sinh viên từ 2214547 thành 1111111---*/
+UPDATE SinhVien
+SET MaSinhVien = 1111111
+WHERE MaSinhVien = 2214547;
+/*-------------------------------------------Thống kê---------------------------------------*/
+--@block
+SELECT 
+    (SELECT COUNT(*) FROM SinhVien) AS TongSoSinhVienToanTruong,
+    (SELECT COUNT(*) FROM SinhVien WHERE GioiTinh = 'Nam') AS TongSoSinhVienNam,
+    (SELECT COUNT(*) FROM SinhVien WHERE GioiTinh = 'Nữ') AS TongSoSinhVienNu,
+    (SELECT COUNT(*) FROM GiangVien WHERE TrinhDo = 'Thạc sĩ') AS TongSoGiangVienThacSi,
+    (SELECT COUNT(*) FROM GiangVien) AS TongSoGiangVien,
+    (SELECT COUNT(*) FROM GiangVien WHERE TrinhDo = 'Thạc sĩ') * 100 / (SELECT COUNT(*) FROM GiangVien) AS TyLeThacSi;
+
 
