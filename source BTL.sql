@@ -21,10 +21,9 @@ CREATE TABLE GiangVien (
     TrinhDo VARCHAR(50),
     SoDienThoai VARCHAR(15),
     MaKhoa INT,
-    FOREIGN KEY (MaKhoa) REFERENCES Khoa(MaKhoa)
+    FOREIGN KEY (MaKhoa) REFERENCES Khoa(MaKhoa) ON UPDATE CASCADE
 );
 --@block
-
 -- Tạo bảng Chương trình học
 CREATE TABLE ChuongTrinhHoc (
     MaChuongTrinh VARCHAR(2) PRIMARY KEY,
@@ -33,7 +32,6 @@ CREATE TABLE ChuongTrinhHoc (
     ChuanCongTacXaHoi VARCHAR(100)
 );
 --@block
-
 -- Tạo bảng Sinh viên
 CREATE TABLE SinhVien (
     MaSinhVien INT PRIMARY KEY,
@@ -45,8 +43,8 @@ CREATE TABLE SinhVien (
     Email VARCHAR(100),
     MaKhoa INT,
     MaChuongTrinh VARCHAR(2),
-    FOREIGN KEY (MaKhoa) REFERENCES Khoa(MaKhoa),
-    FOREIGN KEY (MaChuongTrinh) REFERENCES ChuongTrinhHoc(MaChuongTrinh)
+    FOREIGN KEY (MaKhoa) REFERENCES Khoa(MaKhoa) ON UPDATE CASCADE,
+    FOREIGN KEY (MaChuongTrinh) REFERENCES ChuongTrinhHoc(MaChuongTrinh) ON UPDATE CASCADE
 );
 --@block
 
@@ -66,8 +64,8 @@ CREATE TABLE Gom (
     MaChuongTrinh VARCHAR(2),
     MaMonHoc VARCHAR(20),
     PRIMARY KEY (MaChuongTrinh, MaMonHoc),
-    FOREIGN KEY (MaChuongTrinh) REFERENCES ChuongTrinhHoc(MaChuongTrinh),
-    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc)
+    FOREIGN KEY (MaChuongTrinh) REFERENCES ChuongTrinhHoc(MaChuongTrinh) ON UPDATE CASCADE,
+    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc) ON UPDATE CASCADE
 );
 --@block
 
@@ -79,8 +77,8 @@ CREATE TABLE DangKy (
     TrangThai VARCHAR(50),
     Diem FLOAT,
     PRIMARY KEY (MaSinhVien, MaMonHoc),
-    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaSinhVien),
-    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc)
+    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaSinhVien) ON UPDATE CASCADE,
+    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc) ON UPDATE CASCADE
 );
 --@block
 
@@ -92,8 +90,8 @@ CREATE TABLE PhuTrach (
     DiaDiemDay VARCHAR(100),
     HocKi VARCHAR(10),
     PRIMARY KEY (MaGiangVien, MaMonHoc),
-    FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaGiangVien),
-    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc)
+    FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaGiangVien) ON UPDATE CASCADE,
+    FOREIGN KEY (MaMonHoc) REFERENCES MonHoc(MaMonHoc) ON UPDATE CASCADE
 );
 
 --@block
@@ -153,7 +151,7 @@ INSERT INTO GiangVien (MaGiangVien, HoTen, ChucDanh, TrinhDo, SoDienThoai, MaKho
 -- Thêm dữ liệu mẫu vào bảng Chương trình học
 INSERT INTO ChuongTrinhHoc (MaChuongTrinh, TongSoTinChi, ChuanNgoaiNguTotNghiep, ChuanCongTacXaHoi) VALUES
 ('CC', 128, 'IELTS> 6.5', '15 NGÀY CỘNG TÁC XÃ HỘI'),
-('CN', 128, 'IELTS >6.0 Và JLPT>N3', '15 NGÀY CỘNG TÁC XÃ HỘI'),
+('CN', 128, 'IELTS >6.0 Hoặc JLPT>N3', '15 NGÀY CỘNG TÁC XÃ HỘI'),
 ('L', 128, 'Toeic > 600 Hoặc Ielts> 6.0', '15 NGÀY CỘNG TÁC XÃ HỘI');
 --@block
 
@@ -286,7 +284,6 @@ INSERT INTO PhuTrach (MaGiangVien, MaMonHoc, ThoiGianDay, DiaDiemDay, HocKi) VAL
 (3369132, 'CO2019', '15:00:00', 'Phòng C1', 'HK211'),
 (3370214, 'CO2020', '08:00:00', 'Phòng D3', 'HK222');
 --@block
---Thêm dữ liệu đăng ký môn học với điểm ngẫu nhiên
 INSERT INTO DangKy (MaSinhVien, MaMonHoc, MaHocKi, TrangThai, Diem)
 SELECT 
     sv.MaSinhVien, 
@@ -369,8 +366,6 @@ BEGIN
     END WHILE;
 END;
 CALL TaoSinhVien();
-
-/*-------------------------------------Các hàm test trường dữ liệu*/-------------------------------------*/
 --@block
 SELECT * FROM GiangVien;
 SELECT *FRom chuongtrinhhoc;
@@ -384,9 +379,11 @@ SELECT*FROM phutrach;
 --@block
 drop database academic_management;
 create database academic_management;
+
 /*-------------------------------------------CRU( TRUY VẤN DỮ LIỆU)----------------------------------------*/
---Create
+
 --@block
+--Create
 INSERT INTO SinhVien (MaSinhVien, HoVaTen, NgaySinh, SoDienThoai, Khoa, GioiTinh, Email, MaKhoa, MaChuongTrinh)
 VALUES (2219999, 'Nguyễn Văn An', '2001-12-12', '0912345678', 2023, 'Nam', 'an.nguyen@hcmut.edu.vn', 5, 'CC');
 /*--------------------------Retrieve--------*/
@@ -418,12 +415,10 @@ SELECT
     (COUNT(*) * 100 / (SELECT COUNT(*) FROM GiangVien)) AS TyLeThacSi
 FROM GiangVien
 WHERE TrinhDo = 'Thạc sĩ';
-/*--------------------------Update--------*/
-/*-----------Sửa mã số sinh viên từ 2214547 thành 1111111---*/
+--@block
 UPDATE SinhVien
 SET MaSinhVien = 1111111
-WHERE MaSinhVien = 2214547;
-/*-------------------------------------------Thống kê---------------------------------------*/
+WHERE MaSinhVien = 2211026;
 --@block
 SELECT 
     (SELECT COUNT(*) FROM SinhVien) AS TongSoSinhVienToanTruong,
@@ -432,5 +427,8 @@ SELECT
     (SELECT COUNT(*) FROM GiangVien WHERE TrinhDo = 'Thạc sĩ') AS TongSoGiangVienThacSi,
     (SELECT COUNT(*) FROM GiangVien) AS TongSoGiangVien,
     (SELECT COUNT(*) FROM GiangVien WHERE TrinhDo = 'Thạc sĩ') * 100 / (SELECT COUNT(*) FROM GiangVien) AS TyLeThacSi;
+
+--@Block
+select * from sinhvien;
 
 
